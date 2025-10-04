@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duc Thanh School | Historic Site</title>
+    <style>
+        /* General Styling & Theming */
+        :root {
+            --primary-color-light: #6A8A54; /* Green */
+            --secondary-color-light: #F2E8CF; /* Cream */
+            --background-color-light: #FAF8F1;
+            --text-color-light: #3a3a3a;
+            --header-color-light: #2C4A32; /* Dark Green for high contrast text */
+
+            --primary-color-dark: #8BC34A; /* Brighter Green */
+            --secondary-color-dark: #424242; /* Dark Gray */
+            --background-color-dark: #1f1f1f;
+            --text-color-dark: #e0e0e0;
+            --header-color-dark: #F2E8CF; /* Cream for dark mode headers */
+
+            --primary-color: var(--primary-color-light);
+            --secondary-color: var(--secondary-color-light);
+            --background-color: var(--background-color-light);
+            --text-color: var(--text-color-light);
+            --header-color: var(--header-color-light);
+
+            --transition-speed: 0.5s;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        body.dark-mode {
+            --primary-color: var(--primary-color-dark);
+            --secondary-color: var(--secondary-color-dark);
+            --background-color: var(--background-color-dark);
+            --text-color: var(--text-color-dark);
+            --header-color: var(--header-color-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeInZoom {
+            from {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1.5s ease-in-out forwards;
+        }
+
+        .slide-up {
+            animation: slideInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        .slide-left {
+            animation: slideInLeft 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        section {
+            padding: 60px 0;
+            overflow: hidden;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--header-color);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation-delay: 0.2s;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .dark-mode header {
+             background: rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            /* CONTRAST FIX: Using --header-color which is dark green in light mode */
+            color: var(--header-color);
+            text-decoration: none;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .control-button {
+            padding: 8px 16px;
+            /* CONTRAST FIX: Using --header-color for border and text */
+            border: 2px solid var(--header-color);
+            color: var(--header-color);
+            background-color: transparent;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .control-button:hover {
+            /* CONTRAST FIX: Inverting colors on hover for a clear effect */
+            background-color: var(--header-color);
+            color: var(--background-color);
+        }
+
+        /* Hero Section */
+        #intro {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #intro::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://phuhaibeachresortphanthiet.com/wp-content/uploads/2023/02/Banner-32-scaled.jpg') no-repeat center center/cover;
+            z-index: -1;
+            animation: fadeInZoom 2.5s ease-out forwards;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 2s 0.5s backwards;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            animation: fadeIn 2s 1s backwards;
+        }
+
+        /* Info Section */
+        #info .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .info-card {
+            background-color: var(--secondary-color);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .dark-mode .info-card {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        /* Facts Section */
+        #facts {
+            background-color: var(--secondary-color);
+        }
+
+        .fact-item {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .fact-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .fact-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            flex-shrink: 0;
+            animation-delay: 0.4s
+        }
+
+        .fact-text h3 {
+            font-size: 1.8rem;
+            color: var(--header-color);
+            margin-bottom: 10px;
+            animation-delay: 0.6s;
+        }
+
+        .fact-text p {
+            line-height: 1.6;
+            animation-delay: 0.8s;
+        }
+
+        /* Location Section */
+        #location .location-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .location-details {
+            animation-delay: 0.3s;
+        }
+
+        .location-details p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .location-details strong {
+            color: var(--primary-color);
+        }
+
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            height: 400px;
+            animation-delay: 0.5s;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            #location .location-content {
+                grid-template-columns: 1fr;
+            }
+            .fact-item, .fact-item:nth-child(even) {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#intro" class="logo" data-en="DỤC THANH SCHOOL" data-vi="TRƯỜNG DỤC THANH">TRƯỜNG DỤC THANH</a>
+        <div class="controls">
+            <button id="lang-toggle" class="control-button">Eng/Vi</button>
+            <button id="theme-toggle" class="control-button" data-en="Dark/Light" data-vi="Tối/Sáng">Tối/Sáng</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- INTRO -->
+        <section id="intro">
+            <div class="hero-content">
+                <h1 data-en="Duc Thanh School" data-vi="Trường Dục Thanh">Trường Dục Thanh</h1>
+                <p data-en="A National Treasure Where President Ho Chi Minh Shaped the Future" data-vi="Di Tích Quốc Gia Nơi Chủ Tịch Hồ Chí Minh Dạy Học">Di Tích Quốc Gia Nơi Chủ Tịch Hồ Chí Minh Dạy Học</p>
+            </div>
+        </section>
+
+        <!-- INFO -->
+        <section id="info">
+            <div class="container">
+                <h2 class="slide-up" data-en="An Enduring Legacy" data-vi="Di Sản Trường Tồn">Di Sản Trường Tồn</h2>
+                <div class="info-grid">
+                    <div class="info-card slide-up" style="--i:1;">
+                        <h3 data-en="Establishment" data-vi="Thành Lập">Thành Lập</h3>
+                        <p data-en="Founded in 1907 by patriotic scholars, the school was a response to the Duy Tan movement, aiming to modernize education and foster patriotism." data-vi="Được thành lập vào năm 1907 bởi các sĩ phu yêu nước, trường là sự hưởng ứng phong trào Duy Tân, nhằm mục đích canh tân giáo dục và nuôi dưỡng lòng yêu nước.">Được thành lập vào năm 1907 bởi các sĩ phu yêu nước, trường là sự hưởng ứng phong trào Duy Tân, nhằm mục đích canh tân giáo dục và nuôi dưỡng lòng yêu nước.</p>
+                    </div>
+                    <div class="info-card slide-up" style="--i:2;">
+                        <h3 data-en="A Pivotal Period" data-vi="Giai Đoạn Lịch Sử">Giai Đoạn Lịch Sử</h3>
+                        <p data-en="In 1910, a young Nguyen Tat Thanh (the future President Ho Chi Minh) taught at the school before he left Vietnam to find a path for national salvation." data-vi="Năm 1910, thầy giáo trẻ Nguyễn Tất Thành (sau này là Chủ tịch Hồ Chí Minh) đã dạy học tại trường trước khi Người rời Việt Nam ra đi tìm đường cứu nước.">Năm 1910, thầy giáo trẻ Nguyễn Tất Thành (sau này là Chủ tịch Hồ Chí Minh) đã dạy học tại trường trước khi Người rời Việt Nam ra đi tìm đường cứu nước.</p>
+                    </div>
+                    <div class="info-card slide-up" style="--i:3;">
+                        <h3 data-en="Architectural Heritage" data-vi="Di Sản Kiến Trúc">Di Sản Kiến Trúc</h3>
+                        <p data-en="The site preserves its original structures, including the main classrooms, the Ngoa Du Sao (a house for reading and discussions), and lodgings for teachers and students." data-vi="Khu di tích vẫn còn lưu giữ gần như nguyên vẹn các công trình kiến trúc ban đầu, bao gồm lớp học chính, Ngọa Du Sào (nhà dùng để đọc sách và bàn luận), và nhà ở cho giáo viên và học sinh.">Khu di tích vẫn còn lưu giữ gần như nguyên vẹn các công trình kiến trúc ban đầu, bao gồm lớp học chính, Ngọa Du Sào (nhà dùng để đọc sách và bàn luận), và nhà ở cho giáo viên và học sinh.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FACTS -->
+        <section id="facts">
+            <div class="container">
+                <h2 class="slide-up" data-en="Discover the Untold Stories" data-vi="Khám Phá Những Câu Chuyện">Khám Phá Những Câu Chuyện</h2>
+                <div class="fact-item">
+                     <div class="fact-icon slide-left">🌳</div>
+                     <div class="fact-text">
+                         <h3 class="slide-up" data-en="The Living Relic" data-vi="Di Vật Sống">Di Vật Sống</h3>
+                         <p class="slide-up" data-en="A starfruit tree in the garden, which President Ho Chi Minh personally cared for during his time here, still stands and bears fruit to this day." data-vi="Cây khế trong vườn do chính tay Chủ tịch Hồ Chí Minh chăm sóc trong thời gian dạy học tại đây vẫn còn xanh tốt và ra quả cho đến ngày nay.">Cây khế trong vườn do chính tay Chủ tịch Hồ Chí Minh chăm sóc trong thời gian dạy học tại đây vẫn còn xanh tốt và ra quả cho đến ngày nay.</p>
+                     </div>
+                </div>
+                 <div class="fact-item">
+                     <div class="fact-icon slide-left">📚</div>
+                     <div class="fact-text">
+                         <h3 class="slide-up" data-en="A Progressive Curriculum" data-vi="Chương Trình Tiến Bộ">Chương Trình Tiến Bộ</h3>
+                         <p class="slide-up" data-en="For its time, the school had an advanced curriculum that included the Vietnamese national script, Chinese characters, and even French." data-vi="Vào thời điểm đó, trường có một chương trình giảng dạy tiến bộ bao gồm chữ Quốc ngữ, chữ Hán và cả tiếng Pháp.">Vào thời điểm đó, trường có một chương trình giảng dạy tiến bộ bao gồm chữ Quốc ngữ, chữ Hán và cả tiếng Pháp.</p>
+                     </div>
+                </div>
+                 <div class="fact-item">
+                     <div class="fact-icon slide-left">💰</div>
+                     <div class="fact-text">
+                         <h3 class="slide-up" data-en="Tuition-Free Education" data-vi="Giáo Dục Miễn Phí">Giáo Dục Miễn Phí</h3>
+                         <p class="slide-up" data-en="The school was funded by patriotic merchants and landowners, which allowed students from poor families to attend without paying any fees." data-vi="Trường được tài trợ bởi các nhà buôn và địa chủ yêu nước, cho phép học sinh từ các gia đình nghèo được theo học mà không phải trả bất kỳ khoản phí nào.">Trường được tài trợ bởi các nhà buôn và địa chủ yêu nước, cho phép học sinh từ các gia đình nghèo được theo học mà không phải trả bất kỳ khoản phí nào.</p>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOCATION -->
+        <section id="location">
+            <div class="container">
+                <h2 class="slide-up" data-en="Plan Your Visit" data-vi="Lên Kế Hoạch Tham Quan">Lên Kế Hoạch Tham Quan</h2>
+                <div class="location-content">
+                    <div class="location-details slide-left">
+                        <p data-en="Come and experience a pivotal piece of Vietnamese history. The Duc Thanh School is peacefully located on the banks of the picturesque Ca Ty River." data-vi="Hãy đến và trải nghiệm một phần quan trọng của lịch sử Việt Nam. Trường Dục Thanh tọa lạc yên bình bên bờ sông Cà Ty thơ mộng.">Hãy đến và trải nghiệm một phần quan trọng của lịch sử Việt Nam. Trường Dục Thanh tọa lạc yên bình bên bờ sông Cà Ty thơ mộng.</p>
+                        <p>
+                            <strong data-en="Address:" data-vi="Địa chỉ:">Địa chỉ:</strong>
+                            <span data-en="39 Trung Nhi Street, Duc Nghia Ward, Phan Thiet City, Binh Thuan Province, Vietnam." data-vi="39 Trưng Nhị, phường Đức Nghĩa, Thành phố Phan Thiết, tỉnh Bình Thuận, Việt Nam.">39 Trưng Nhị, phường Đức Nghĩa, Thành phố Phan Thiết, tỉnh Bình Thuận, Việt Nam.</span>
+                        </p>
+                        <p>
+                            <strong data-en="Opening Hours:" data-vi="Giờ mở cửa:">Giờ mở cửa:</strong>
+                            <span data-en="Open daily for visitors. We recommend visiting during daylight hours for the best experience." data-vi="Mở cửa hàng ngày cho du khách. Chúng tôi khuyên bạn nên ghé thăm vào ban ngày để có trải nghiệm tốt nhất.">Mở cửa hàng ngày cho du khách. Chúng tôi khuyên bạn nên ghé thăm vào ban ngày để có trải nghiệm tốt nhất.</span>
+                        </p>
+                    </div>
+                    <div class="map-container slide-up">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.593739701786!2d108.1009130748287!3d10.956698189339395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31768406795f109b%3A0x4426541f692994f3!2zVHLGsOG7nW5nIEThu6VjIFRoYW5o!5e0!3m2!1sen!2s!4v1698698765432!5m2!1sen!2s" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p data-en="Duc Thanh School Historic Site © 2025" data-vi="Khu Di Tích Trường Dục Thanh © 2025">Khu Di Tích Trường Dục Thanh © 2025</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Theme (Dark/Light Mode) Toggle ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            // Check for saved theme preference
+            if (localStorage.getItem('theme') === 'dark') {
+                body.classList.add('dark-mode');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                // Save theme preference
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // --- Language (Eng/Vi) Toggle ---
+            const langToggle = document.getElementById('lang-toggle');
+            const translatableElements = document.querySelectorAll('[data-en]');
+
+            let currentLang = localStorage.getItem('lang') || 'vi'; // Default to Vietnamese
+
+            const setLanguage = (lang) => {
+                translatableElements.forEach(el => {
+                    el.textContent = el.dataset[lang];
+                });
+                document.documentElement.lang = lang;
+                localStorage.setItem('lang', lang);
+                currentLang = lang;
+            };
+
+            langToggle.addEventListener('click', () => {
+                const newLang = currentLang === 'en' ? 'vi' : 'en';
+                setLanguage(newLang);
+            });
+
+            // Set initial language on page load
+            setLanguage(currentLang);
+
+            // --- Animation on Scroll ---
+            const animatedObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        // Add class to trigger animation
+                        entry.target.style.opacity = '1';
+                        if(entry.target.classList.contains('slide-up')) entry.target.style.transform = 'translateY(0)';
+                        if(entry.target.classList.contains('slide-left')) entry.target.style.transform = 'translateX(0)';
+                        animatedObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const elementsToAnimate = document.querySelectorAll('.slide-up, .slide-left');
+            elementsToAnimate.forEach((el) => {
+                animatedObserver.observe(el);
+            });
+
+        });
+    </script>
+</body>
+</html>
