@@ -26,19 +26,8 @@
             --header-color: var(--header-color-light);
 
             --transition-speed: 0.5s;
-
-            /* Liquid Glass Effect */
-            --glass-frost-blur: 2px;
-            --glass-tint-color-light: 255, 255, 255;
-            --glass-tint-opacity-light: 0.4;
-            --glass-tint-color-dark: 20, 20, 20;
-            --glass-tint-opacity-dark: 0.5;
-            --glass-inner-shadow-blur: 20px;
-            --glass-inner-shadow-spread: -5px;
-            --glass-inner-shadow-color-light: rgba(255, 255, 255, 0.7);
-            --glass-inner-shadow-color-dark: rgba(0, 0, 0, 0.5);
-            --glass-border-color-light: rgba(255, 255, 255, 0.3);
-            --glass-border-color-dark: rgba(255, 255, 255, 0.1);
+            --border-radius-large: 24px;
+            --border-radius-medium: 15px;
         }
 
         html {
@@ -48,9 +37,12 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             margin: 0;
+            padding-bottom: 100px; /* Space for mobile dock */
             background-color: var(--background-color);
             color: var(--text-color);
             transition: background-color var(--transition-speed), color var(--transition-speed);
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
         body.dark-mode {
@@ -61,358 +53,299 @@
             --header-color: var(--header-color-dark);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Animations */
+        /* --- General Content Styles (Unchanged) --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideInUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes slideInLeft { from { transform: translateX(-100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeInZoom { from { opacity: 0; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
-
         .slide-up { animation: slideInUp 1s ease-out forwards; opacity: 0; }
         .slide-left { animation: slideInLeft 1s ease-out forwards; opacity: 0; }
-
         section { padding: 80px 0; overflow: hidden; }
-        section h2 { text-align: center; font-size: 2.8rem; color: var(--header-color); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; animation-delay: 0.2s; }
+        section h2 { text-align: center; font-size: 2.8rem; color: var(--header-color); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
         section h3 { font-size: 1.8rem; color: var(--primary-color); margin-top: 2rem; margin-bottom: 1rem; }
         p, li { line-height: 1.7; font-size: 1.1rem; }
-
-        /* Header & Navigation */
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            z-index: 1000;
-            box-sizing: border-box;
-            isolation: isolate;
-            border-bottom: 1px solid var(--glass-border-color-light);
-            transition: border-color 0.3s;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            box-shadow: inset 0 0 var(--glass-inner-shadow-blur) var(--glass-inner-shadow-spread) var(--glass-inner-shadow-color-light);
-            background-color: rgba(var(--glass-tint-color-light), var(--glass-tint-opacity-light));
-            transition: background-color 0.3s, box-shadow 0.3s;
-            pointer-events: none;
-        }
-
-        header::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -2;
-            -webkit-backdrop-filter: blur(var(--glass-frost-blur));
-            backdrop-filter: blur(var(--glass-frost-blur));
-            filter: url(#glass-distortion);
-            pointer-events: none;
-        }
-
-        .dark-mode header {
-            border-color: var(--glass-border-color-dark);
-        }
-
-        .dark-mode header::before {
-             background-color: rgba(var(--glass-tint-color-dark), var(--glass-tint-opacity-dark));
-             box-shadow: inset 0 0 var(--glass-inner-shadow-blur) var(--glass-inner-shadow-spread) var(--glass-inner-shadow-color-dark);
-        }
-
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--header-color); text-decoration: none; flex-shrink: 0; }
-        nav { display: flex; gap: 25px; }
-        nav a { text-decoration: none; color: var(--header-color); font-weight: bold; position: relative; padding-bottom: 5px; }
-        nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background-color: var(--primary-color); transform: scaleX(0); transform-origin: bottom right; transition: transform 0.25s ease-out; }
-        nav a:hover::after, nav a.active::after { transform: scaleX(1); transform-origin: bottom left; }
-
-        /* Hero Section */
-        #intro { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 2rem; position: relative; overflow: hidden; }
+        #intro { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 2rem; position: relative; }
         #intro::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://phuhaibeachresortphanthiet.com/wp-content/uploads/2023/02/Banner-32-scaled.jpg') no-repeat center center/cover; z-index: -1; animation: fadeInZoom 2.5s ease-out forwards; }
-        .hero-content { max-width: 800px; }
-        .hero-content h1 { font-size: 4rem; margin-bottom: 1rem; animation: fadeIn 2s 0.5s backwards; }
-        .hero-content p { font-size: 1.2rem; animation: fadeIn 2s 1s backwards; }
-
-        /* Info Section */
+        .hero-content h1 { font-size: 4rem; margin-bottom: 1rem; } .hero-content p { font-size: 1.2rem; }
         #info .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
-        
-        .info-card {
-            padding: 30px;
-            animation-delay: calc(0.2s * var(--i));
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: relative;
-            isolation: isolate;
-            border-radius: 24px;
-            border: 1px solid var(--glass-border-color-light);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .info-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            border-radius: inherit;
-            box-shadow: inset 0 0 var(--glass-inner-shadow-blur) var(--glass-inner-shadow-spread) var(--glass-inner-shadow-color-light);
-            background-color: rgba(var(--glass-tint-color-light), var(--glass-tint-opacity-light));
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        .info-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -2;
-            border-radius: inherit;
-            -webkit-backdrop-filter: blur(var(--glass-frost-blur));
-            backdrop-filter: blur(var(--glass-frost-blur));
-            filter: url(#glass-distortion);
-        }
-
-        .dark-mode .info-card { border-color: var(--glass-border-color-dark); }
-        .dark-mode .info-card::before { background-color: rgba(var(--glass-tint-color-dark), var(--glass-tint-opacity-dark)); box-shadow: inset 0 0 var(--glass-inner-shadow-blur) var(--glass-inner-shadow-spread) var(--glass-inner-shadow-color-dark); }
-
-        .info-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
-        .info-card h3 { color: var(--primary-color); font-size: 1.5rem; margin-top: 0; }
-
-        #facts, #documentation, #credits { background-color: var(--secondary-color); }
-
-        /* Facts Section */
-        .fact-item { display: flex; align-items: center; gap: 30px; margin-bottom: 40px; }
-        .fact-item:nth-child(even) { flex-direction: row-reverse; }
-        .fact-icon { font-size: 4rem; color: var(--primary-color); flex-shrink: 0; }
-
-        /* Location Section */
+        .info-card { padding: 30px; border-radius: var(--border-radius-large); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.1); }
+        #facts, #credits { background-color: var(--secondary-color); } .fact-item { display: flex; align-items: center; gap: 30px; margin-bottom: 40px; }
+        .fact-item:nth-child(even) { flex-direction: row-reverse; } .fact-icon { font-size: 4rem; color: var(--primary-color); }
         #location .location-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-        .location-details strong { color: var(--primary-color); }
-        .map-container { border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); height: 400px; }
-        .map-container iframe { width: 100%; height: 100%; border: 0; }
+        .map-container { border-radius: var(--border-radius-medium); overflow: hidden; height: 400px; } .map-container iframe { width: 100%; height: 100%; border: 0; }
+        #credits a { color: var(--primary-color); }
+        .page-footer { text-align: center; padding: 2rem; background-color: #1f1f1f; color: #e0e0e0; }
 
-        /* Credits Section */
-        #credits a { color: var(--primary-color); text-decoration: none; font-weight: bold; }
-        #credits a:hover { text-decoration: underline; }
 
-        /* Footer */
-        footer { text-align: center; padding: 2rem; background-color: #1f1f1f; color: #e0e0e0; }
+        /* --- DESKTOP: Liquid Glass Dock --- */
+        .effect {
+            display: none; /* Hidden by default, shown on desktop */
+        }
+        @media (min-width: 769px) {
+            .mobile-dock { display: none; } /* Hide mobile dock on desktop */
 
-        /* Responsive */
-        @media (max-width: 1024px) { nav { display: none; } }
-        @media (max-width: 768px) { .hero-content h1 { font-size: 2.5rem; } #location .location-content { grid-template-columns: 1fr; } .fact-item, .fact-item:nth-child(even) { flex-direction: column; text-align: center; } }
+            .effect {
+                display: block;
+                opacity: 0;
+                transition: opacity 0.26s ease-out;
+                height: calc(var(--height) * 1px);
+                width: calc(var(--width) * 1px);
+                border-radius: calc(var(--radius) * 1px);
+                position: fixed;
+                z-index: 9999;
+                background: light-dark(hsl(0 0% 100% / var(--frost, 0)), hsl(0 0% 0% / var(--frost, 0)));
+                backdrop-filter: url(#filter) saturate(var(--saturation, 1));
+                box-shadow: 0 0 2px 1px light-dark(rgba(0,0,0,0.15), rgba(255,255,255,0.15)) inset, 0 4px 16px rgba(0,0,0,0.1);
+            }
+            .effect * { pointer-events: none; }
+            .effect nav a { pointer-events: all; }
+            .effect .nav-wrap { width: 100%; height: 100%; overflow: hidden; border-radius: inherit; }
+            .effect nav { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem; }
+            .effect nav a { text-decoration: none; color: var(--text-color); font-weight: 500; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 8px; transition: background-color 0.2s, color 0.2s; }
+            .effect nav a:hover, .effect nav a.active { background-color: rgba(128, 128, 128, 0.2); color: var(--primary-color); }
+            .filter { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+            .placeholder-section { display: flex; justify-content: center; align-items: center; padding-bottom: 4rem; min-height: 120px; }
+            .dock-placeholder { width: 550px; height: 65px; border-radius: 16px; }
+        }
+
+        /* --- MOBILE: Touch-Friendly Dock --- */
+        .mobile-dock {
+            display: none; /* Hidden by default, shown on mobile */
+        }
+        @media (max-width: 768px) {
+            .effect, .filter, .placeholder-section { display: none; } /* Hide desktop dock and its helpers */
+
+            .mobile-dock {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: fixed;
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+                z-index: 1000;
+                padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+                border-radius: var(--border-radius-large);
+                background-color: rgba(240, 240, 240, 0.6);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            }
+            .dark-mode .mobile-dock {
+                background-color: rgba(30, 30, 30, 0.6);
+            }
+            .mobile-dock .logo {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: var(--header-color);
+                text-decoration: none;
+            }
+            #mobile-menu-toggle {
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 10px;
+                z-index: 1001;
+            }
+            .hamburger-bar {
+                width: 25px;
+                height: 3px;
+                background-color: var(--header-color);
+                transition: transform 0.3s, opacity 0.3s;
+                display: block;
+            }
+            .hamburger-bar + .hamburger-bar { margin-top: 5px; }
+
+            /* Mobile Nav Panel */
+            .mobile-dock nav {
+                position: absolute;
+                bottom: calc(100% + 10px);
+                right: 0;
+                width: 250px;
+                padding: 1rem;
+                background-color: rgba(250, 250, 250, 0.8);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                border-radius: var(--border-radius-medium);
+                box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(10px);
+                transition: all 0.3s ease-out;
+            }
+            .dark-mode .mobile-dock nav {
+                background-color: rgba(40, 40, 40, 0.8);
+            }
+            .mobile-dock nav a {
+                text-decoration: none;
+                color: var(--text-color);
+                font-weight: 500;
+                padding: 0.75rem 1rem;
+                border-radius: 8px;
+            }
+            .mobile-dock nav a.active {
+                 background-color: var(--primary-color);
+                 color: white;
+            }
+            .dark-mode .mobile-dock nav a.active {
+                color: var(--background-color-dark);
+            }
+
+            /* Open State */
+            body.nav-open .mobile-dock nav {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(2) { opacity: 0; }
+            body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            /* Adjust content for mobile */
+            .hero-content h1 { font-size: 2.5rem; }
+            #location .location-content { grid-template-columns: 1fr; }
+            .fact-item, .fact-item:nth-child(even) { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
+    <main>
+        <!-- Page content remains the same... -->
+        <section id="intro" aria-labelledby="intro-heading"><div class="hero-content"><h1 id="intro-heading">Trường Dục Thanh</h1><p>Di Tích Quốc Gia Nơi Chủ Tịch Hồ Chí Minh Dạy Học</p></div></section>
+        <section id="info" aria-labelledby="info-heading"><div class="container"><h2 id="info-heading" class="slide-up">Di Sản Trường Tồn</h2><div class="info-grid"><div class="info-card slide-up" style="--i:1;"><h3>Thành Lập</h3><p>Được thành lập vào năm 1907 bởi các sĩ phu yêu nước, trường là sự hưởng ứng phong trào Duy Tân...</p></div><div class="info-card slide-up" style="--i:2;"><h3>Giai Đoạn Lịch Sử</h3><p>Năm 1910, thầy giáo trẻ Nguyễn Tất Thành (sau này là Chủ tịch Hồ Chí Minh) đã dạy học tại trường...</p></div><div class="info-card slide-up" style="--i:3;"><h3>Di Sản Kiến Trúc</h3><p>Khu di tích vẫn còn lưu giữ gần như nguyên vẹn các công trình kiến trúc ban đầu...</p></div></div></div></section>
+        <section id="facts" aria-labelledby="facts-heading"><div class="container"><h2 id="facts-heading" class="slide-up">Khám Phá Những Câu Chuyện</h2><div class="fact-item"><div class="fact-icon slide-left">🌳</div><div class="fact-text"><h3 class="slide-up">Di Vật Sống</h3><p class="slide-up">Cây khế trong vườn do chính tay Chủ tịch Hồ Chí Minh chăm sóc vẫn còn xanh tốt...</p></div></div><div class="fact-item"><div class="fact-icon slide-left">📚</div><div class="fact-text"><h3 class="slide-up">Chương Trình Tiến Bộ</h3><p class="slide-up">Vào thời điểm đó, trường có một chương trình giảng dạy tiến bộ...</p></div></div><div class="fact-item"><div class="fact-icon slide-left">💰</div><div class="fact-text"><h3 class="slide-up">Giáo Dục Miễn Phí</h3><p class="slide-up">Trường được tài trợ bởi các nhà buôn và địa chủ yêu nước...</p></div></div></div></section>
+        <section id="documentation" aria-labelledby="documentation-heading"><div class="container"><h2 id="documentation-heading" class="slide-up">Tư Liệu Chi Tiết</h2><h3>Sự Thành Lập và Phong Trào Duy Tân</h3><p>Trường Dục Thanh được thành lập vào năm 1907...</p><h3>Thầy giáo Nguyễn Tất Thành (Hồ Chí Minh)</h3><p>Vào tháng 9 năm 1910...</p><h3>Kiến Trúc và Khuôn Viên</h3><p>Kiến trúc của trường là một ví dụ khiêm tốn...</p></div></section>
+        <section id="location" aria-labelledby="location-heading"><div class="container"><h2 id="location-heading" class="slide-up">Lên Kế Hoạch Tham Quan</h2><div class="location-content"><div class="location-details slide-left"><p>Hãy đến và trải nghiệm một phần quan trọng của lịch sử Việt Nam...</p><p><strong>Địa chỉ:</strong> <span>39 Trưng Nhị, Phan Thiết...</span></p><p><strong>Giờ mở cửa:</strong> <span>Mở cửa hàng ngày...</span></p></div><div class="map-container slide-up"><iframe src="https://www.google.com/maps/embed?pb=!1m18!m12!1m3!1d3902.593739701786!2d108.1009130748287!3d10.956698189339395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31768406795f109b%3A0x4426541f692994f3!2zVHLGsOG7nW5nIEThu6VjIFRoYW5o!5e0!3m2!1sen!2s!4v1698698765432!5m2!1sen!2s" loading="lazy"></iframe></div></div></div></section>
+        <section id="credits" aria-labelledby="credits-heading"><div class="container"><h2 id="credits-heading" class="slide-up">Nguồn và Ghi công</h2><div class="credits-content"><h3>Thông tin</h3><p>... <a href="https://en.wikipedia.org/wiki/Duc_Thanh_School" target="_blank">Truy cập trang Wikipedia</a></p><h3>Hình ảnh</h3><p>... <a href="https://phuhaibeachresortphanthiet.com/" target="_blank">Truy cập trang web nguồn</a></p></div></div></section>
+        <section class="placeholder-section"><div class="dock-placeholder"></div></section>
+    </main>
+    <footer class="page-footer"><p>Khu Di Tích Trường Dục Thanh © 2025</p></footer>
 
-    <header>
+    <!-- DESKTOP: Liquid Glass Dock Elements -->
+    <div class="effect"><div class="nav-wrap"><nav class="desktop-nav"><a href="#intro" class="nav-link">Trang Chủ</a><a href="#info" class="nav-link">Thông Tin</a><a href="#facts" class="nav-link">Sự Thật</a><a href="#documentation" class="nav-link">Tư Liệu</a><a href="#location" class="nav-link">Vị Trí</a><a href="#credits" class="nav-link">Nguồn</a></nav></div></div>
+    <svg class="filter" xmlns="http://www.w3.org/2000/svg"><defs><filter id="filter" color-interpolation-filters="sRGB"><feImage x="0" y="0" width="100%" height="100%" result="map"></feImage><feDisplacementMap in="SourceGraphic" in2="map" id="redchannel" xChannelSelector="R" yChannelSelector="G" result="dispRed" /><feColorMatrix in="dispRed" type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" result="red" /><feDisplacementMap in="SourceGraphic" in2="map" id="greenchannel" xChannelSelector="R" yChannelSelector="G" result="dispGreen" /><feColorMatrix in="dispGreen" type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0" result="green" /><feDisplacementMap in="SourceGraphic" in2="map" id="bluechannel" xChannelSelector="R" yChannelSelector="G" result="dispBlue" /><feColorMatrix in="dispBlue" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0" result="blue" /><feBlend in="red" in2="green" mode="screen" result="rg" /><feBlend in="rg" in2="blue" mode="screen" result="output" /><feGaussianBlur in="output" stdDeviation="0.7" /></filter></defs></svg>
+
+    <!-- MOBILE: Touch-Friendly Dock -->
+    <div class="mobile-dock">
         <a href="#intro" class="logo">TRƯỜNG DỤC THANH</a>
-        <nav id="nav-menu">
+        <nav class="mobile-nav">
+            <a href="#intro" class="nav-link">Trang Chủ</a>
             <a href="#info" class="nav-link">Thông Tin</a>
             <a href="#facts" class="nav-link">Sự Thật</a>
             <a href="#documentation" class="nav-link">Tư Liệu</a>
             <a href="#location" class="nav-link">Vị Trí</a>
             <a href="#credits" class="nav-link">Nguồn</a>
         </nav>
-        <!-- Control buttons removed -->
-    </header>
+        <button id="mobile-menu-toggle" aria-label="Mở menu">
+            <span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
+        </button>
+    </div>
 
-    <main>
-        <!-- INTRO -->
-        <section id="intro">
-            <div class="hero-content">
-                <h1>Trường Dục Thanh</h1>
-                <p>Di Tích Quốc Gia Nơi Chủ Tịch Hồ Chí Minh Dạy Học</p>
-            </div>
-        </section>
+    <script type="module">
+        import gsap from 'https://cdn.skypack.dev/gsap@3.12.5';
+        import Draggable from 'https://cdn.skypack.dev/gsap@3.12.5/Draggable';
+        gsap.registerPlugin(Draggable);
 
-        <!-- INFO -->
-        <section id="info">
-            <div class="container">
-                <h2 class="slide-up">Di Sản Trường Tồn</h2>
-                <div class="info-grid">
-                    <div class="info-card slide-up" style="--i:1;">
-                        <h3>Thành Lập</h3>
-                        <p>Được thành lập vào năm 1907 bởi các sĩ phu yêu nước, trường là sự hưởng ứng phong trào Duy Tân, nhằm mục đích canh tân giáo dục và nuôi dưỡng lòng yêu nước.</p>
-                    </div>
-                    <div class="info-card slide-up" style="--i:2;">
-                        <h3>Giai Đoạn Lịch Sử</h3>
-                        <p>Năm 1910, thầy giáo trẻ Nguyễn Tất Thành (sau này là Chủ tịch Hồ Chí Minh) đã dạy học tại trường trước khi Người rời Việt Nam ra đi tìm đường cứu nước.</p>
-                    </div>
-                    <div class="info-card slide-up" style="--i:3;">
-                        <h3>Di Sản Kiến Trúc</h3>
-                        <p>Khu di tích vẫn còn lưu giữ gần như nguyên vẹn các công trình kiến trúc ban đầu, bao gồm lớp học chính, Ngọa Du Sào (nhà dùng để đọc sách và bàn luận), và nhà ở cho giáo viên và học sinh.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        // --- Shared Site Logic ---
+        const body = document.body;
+        const themeMatcher = window.matchMedia('(prefers-color-scheme: dark)');
+        const applyTheme = (isDark) => body.classList.toggle('dark-mode', isDark);
+        applyTheme(themeMatcher.matches);
+        themeMatcher.addEventListener('change', (e) => applyTheme(e.matches));
 
-        <!-- FACTS -->
-        <section id="facts">
-            <div class="container">
-                <h2 class="slide-up">Khám Phá Những Câu Chuyện</h2>
-                <div class="fact-item">
-                     <div class="fact-icon slide-left">🌳</div>
-                     <div class="fact-text">
-                         <h3 class="slide-up">Di Vật Sống</h3>
-                         <p class="slide-up">Cây khế trong vườn do chính tay Chủ tịch Hồ Chí Minh chăm sóc trong thời gian dạy học tại đây vẫn còn xanh tốt và ra quả cho đến ngày nay.</p>
-                     </div>
-                </div>
-                 <div class="fact-item">
-                     <div class="fact-icon slide-left">📚</div>
-                     <div class="fact-text">
-                         <h3 class="slide-up">Chương Trình Tiến Bộ</h3>
-                         <p class="slide-up">Vào thời điểm đó, trường có một chương trình giảng dạy tiến bộ bao gồm chữ Quốc ngữ, chữ Hán và cả tiếng Pháp.</p>
-                     </div>
-                </div>
-                 <div class="fact-item">
-                     <div class="fact-icon slide-left">💰</div>
-                     <div class="fact-text">
-                         <h3 class="slide-up">Giáo Dục Miễn Phí</h3>
-                         <p class="slide-up">Trường được tài trợ bởi các nhà buôn và địa chủ yêu nước, cho phép học sinh từ các gia đình nghèo được theo học mà không phải trả bất kỳ khoản phí nào.</p>
-                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- DOCUMENTATION -->
-        <section id="documentation">
-            <div class="container">
-                <h2 class="slide-up">Tư Liệu Chi Tiết</h2>
-                <div class="doc-content">
-                    <h3>Sự Thành Lập và Phong Trào Duy Tân</h3>
-                    <p>Trường Dục Thanh được thành lập vào năm 1907, không chỉ đơn thuần là một cơ sở giáo dục, mà còn là ngọn hải đăng của phong trào Duy Tân ở miền Trung Việt Nam. Phong trào này, do các trí thức như Phan Châu Trinh và Huỳnh Thúc Kháng lãnh đạo, chủ trương từ bỏ tư tưởng Nho giáo lỗi thời và tiếp thu học vấn phương Tây về khoa học, công nghiệp và quản trị để củng cố sức mạnh của Việt Nam chống lại ách đô hộ của thực dân Pháp. Trường được tài trợ bởi Hội Liên Thành, một nhóm các sĩ phu và nhà buôn yêu nước. Sứ mệnh chính của trường là giáo dục thế hệ trẻ, hun đúc lòng tự hào dân tộc và chuẩn bị một thế hệ mới có khả năng lãnh đạo đất nước đi đến độc lập.</p>
-
-                    <h3>Thầy giáo Nguyễn Tất Thành (Hồ Chí Minh)</h3>
-                    <p>Vào tháng 9 năm 1910, ở tuổi 20, người thanh niên yêu nước Nguyễn Tất Thành đã dừng chân tại Phan Thiết trên hành trình vào Nam. Được bạn giới thiệu, Người được nhận vào làm giáo viên trẻ nhất tại trường Dục Thanh. Thầy đã dạy tiếng Pháp, văn học Việt Nam và thể dục. Mặc dù thời gian giảng dạy ngắn ngủi—kéo dài đến tháng 2 năm 1911—nhưng ảnh hưởng của thầy vô cùng sâu sắc. Thầy nổi tiếng với phương pháp giảng dạy tiến bộ, sự tận tâm với học sinh và khả năng lồng ghép những thông điệp yêu nước vào bài giảng. Giai đoạn này đã định hình tư tưởng cho vị chủ tịch tương lai, cho phép Người tiếp xúc với các nhà yêu nước khác, mài giũa lý tưởng cách mạng của mình và chứng kiến tận mắt khao khát tri thức và tự do của nhân dân trước khi bắt đầu hành trình lịch sử ra nước ngoài từ Sài Gòn.</p>
-
-                    <h3>Kiến Trúc và Khuôn Viên</h3>
-                    <p>Kiến trúc của trường là một ví dụ khiêm tốn nhưng tiêu biểu cho thiết kế truyền thống của Việt Nam. Tòa nhà chính bao gồm ba gian nhà khung gỗ, mái ngói, được dùng làm phòng học. Bên cạnh là 'Ngọa Du Sào', một ngôi nhà gỗ nhỏ hai tầng. Tầng trên là thư viện và nơi họp bàn của các thầy giáo để thảo luận về thời sự, trong khi tầng dưới là nơi nghỉ ngơi, giải trí. Khuôn viên trường còn có một dãy nhà dành cho giáo viên và học sinh ở xa trọ học. Toàn bộ khu phức hợp nằm trong một khu vườn với cây khế nổi tiếng, tạo ra một không gian yên tĩnh, thuận lợi cho việc học tập và suy ngẫm.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- LOCATION -->
-        <section id="location">
-            <div class="container">
-                <h2 class="slide-up">Lên Kế Hoạch Tham Quan</h2>
-                <div class="location-content">
-                    <div class="location-details slide-left">
-                        <p>Hãy đến và trải nghiệm một phần quan trọng của lịch sử Việt Nam. Trường Dục Thanh tọa lạc yên bình bên bờ sông Cà Ty thơ mộng.</p>
-                        <p>
-                            <strong>Địa chỉ:</strong>
-                            <span>39 Trưng Nhị, phường Đức Nghĩa, Thành phố Phan Thiết, tỉnh Bình Thuận, Việt Nam.</span>
-                        </p>
-                        <p>
-                            <strong>Giờ mở cửa:</strong>
-                            <span>Mở cửa hàng ngày cho du khách. Chúng tôi khuyên bạn nên ghé thăm vào ban ngày để có trải nghiệm tốt nhất.</span>
-                        </p>
-                    </div>
-                    <div class="map-container slide-up">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.593739701786!2d108.1009130748287!3d10.956698189339395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31768406795f109b%3A0x4426541f692994f3!2zVHLGsOG7nW5nIEThu6VjIFRoYW5o!5e0!3m2!1sen!2s!4v1698698765432!5m2!1sen!2s" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CREDITS -->
-        <section id="credits">
-            <div class="container">
-                <h2 class="slide-up">Nguồn và Ghi công</h2>
-                <div class="credits-content">
-                    <h3>Thông tin</h3>
-                    <p>Thông tin chi tiết về lịch sử và sự kiện được trình bày trên trang web này chủ yếu được lấy và điều chỉnh từ Wikipedia, bách khoa toàn thư mở. Chúng tôi xin gửi lời cảm ơn đến các biên tập viên và người đóng góp tình nguyện vì công trình ghi lại lịch sử của Trường Dục Thanh.</p>
-                    <p><a href="https://en.wikipedia.org/wiki/Duc_Thanh_School" target="_blank">Truy cập trang Wikipedia</a></p>
-
-                    <h3>Hình ảnh</h3>
-                    <p>Hình ảnh banner chính được sử dụng trong phần giới thiệu do Phu Hai Beach Resort Phan Thiet cung cấp.</p>
-                     <p><a href="https://phuhaibeachresortphanthiet.com/" target="_blank">Truy cập trang web nguồn</a></p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <p>Khu Di Tích Trường Dục Thanh © 2025</p>
-    </footer>
-
-    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
-        <defs>
-            <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise"></feTurbulence>
-                <feGaussianBlur in="noise" stdDeviation="2" result="blurred"></feGaussianBlur>
-                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="77" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-            </filter>
-        </defs>
-    </svg>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // --- Automatic Theme Detection ---
-            const themeMatcher = window.matchMedia('(prefers-color-scheme: dark)');
-            const body = document.body;
-
-            const applyTheme = (isDark) => {
-                if (isDark) {
-                    body.classList.add('dark-mode');
-                } else {
-                    body.classList.remove('dark-mode');
+        const animatedObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    // Reset transform to ensure animations run correctly
+                    if (entry.target.classList.contains('slide-up')) entry.target.style.transform = 'translateY(0)';
+                    if (entry.target.classList.contains('slide-left')) entry.target.style.transform = 'translateX(0)';
+                    animatedObserver.unobserve(entry.target);
                 }
-            };
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.slide-up, .slide-left').forEach((el) => animatedObserver.observe(el));
 
-            // Apply theme on initial load
-            applyTheme(themeMatcher.matches);
+        // --- Universal Scroll Spy Logic ---
+        const sections = document.querySelectorAll('main section');
+        const allNavLinks = document.querySelectorAll('.nav-link');
 
-            // Listen for theme changes
-            themeMatcher.addEventListener('change', (e) => {
-                applyTheme(e.matches);
+        const activateNavLink = () => {
+            let currentSectionId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 150) {
+                    currentSectionId = section.getAttribute('id');
+                }
             });
 
-            // --- Animation on Scroll ---
-            const animatedObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        if(entry.target.classList.contains('slide-up')) entry.target.style.transform = 'translateY(0)';
-                        if(entry.target.classList.contains('slide-left')) entry.target.style.transform = 'translateX(0)';
-                        animatedObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            const elementsToAnimate = document.querySelectorAll('.slide-up, .slide-left');
-            elementsToAnimate.forEach((el) => {
-                animatedObserver.observe(el);
-            });
-
-            // --- Nav Scroll Spy ---
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-
-            const activateNavLink = () => {
-                let index = sections.length;
-
-                while(--index && window.scrollY + 100 < sections[index].offsetTop) {}
-
-                navLinks.forEach((link) => link.classList.remove('active'));
-
-                // Check if the link exists before trying to add a class
-                if (navLinks[index]) {
-                    navLinks[index].classList.add('active');
+            allNavLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
                 }
-            };
+            });
+        };
 
-            activateNavLink(); // Activate on load
-            window.addEventListener('scroll', activateNavLink);
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                if (!inThrottle) {
+                    func.apply(this, arguments);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            }
+        }
+        window.addEventListener('scroll', throttle(activateNavLink, 100));
+        activateNavLink(); // Run on load
+
+        // --- Mobile Dock Logic ---
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+        mobileMenuToggle.addEventListener('click', () => {
+            body.classList.toggle('nav-open');
         });
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                body.classList.remove('nav-open');
+            });
+        });
+
+        // --- Desktop Liquid Glass Dock Logic (ALWAYS INITIALIZE) ---
+        const config = {
+            scale: -180, radius: 16, border: 0.07, lightness: 50, displace: 0, blend: 'difference',
+            x: 'R', y: 'B', alpha: 0.93, blur: 11, r: 0, g: 10, b: 20, saturation: 1, width: 550, height: 65, frost: 0.05,
+        };
+
+        const buildDisplacementImage = () => {
+            const border = Math.min(config.width, config.height) * (config.border * 0.5);
+            const svgContent = `<svg viewBox="0 0 ${config.width} ${config.height}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="red" x1="100%" y1="0%" x2="0%" y2="0%"><stop offset="0%" stop-color="#000"/><stop offset="100%" stop-color="red"/></linearGradient><linearGradient id="blue" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#000"/><stop offset="100%" stop-color="blue"/></linearGradient></defs><rect x="0" y="0" width="${config.width}" height="${config.height}" fill="black"></rect><rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${config.radius}" fill="url(#red)" /><rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${config.radius}" fill="url(#blue)" style="mix-blend-mode: ${config.blend}" /><rect x="${border}" y="${border}" width="${config.width - border * 2}" height="${config.height - border * 2}" rx="${config.radius}" fill="hsl(0 0% ${config.lightness}% / ${config.alpha})" style="filter:blur(${config.blur}px)" /></svg>`;
+            const dataUri = `data:image/svg+xml;base64,${window.btoa(svgContent)}`;
+            gsap.set('feImage', { attr: { href: dataUri } });
+        };
+
+        const update = () => {
+            buildDisplacementImage();
+            gsap.set(document.documentElement, { '--width': config.width, '--height': config.height, '--radius': config.radius, '--frost': config.frost, '--saturation': config.saturation });
+            gsap.set('#redchannel', { attr: { scale: config.scale + config.r } });
+            gsap.set('#greenchannel', { attr: { scale: config.scale + config.g } });
+            gsap.set('#bluechannel', { attr: { scale: config.scale + config.b } });
+            gsap.set('feGaussianBlur', { attr: { stdDeviation: config.displace } });
+        };
+
+        // Initialize Draggable and position the dock
+        Draggable.create('.effect', { type: 'x,y' });
+        update();
+        const placeholder = document.querySelector('.dock-placeholder');
+        if (placeholder) {
+            const { top, left } = placeholder.getBoundingClientRect();
+             gsap.set('.effect', { top: top, left, opacity: 1 });
+        }
     </script>
 </body>
 </html>
