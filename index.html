@@ -7,37 +7,32 @@
     <style>
         /* General Styling & Theming */
         :root {
-            --primary-color-light: #6A8A54; /* Green */
-            --secondary-color-light: #F2E8CF; /* Cream */
+            --primary-color-light: #6A8A54;
+            --secondary-color-light: #F2E8CF;
             --background-color-light: #FAF8F1;
             --text-color-light: #3a3a3a;
-            --header-color-light: #2C4A32; /* Dark Green for high contrast text */
-
-            --primary-color-dark: #8BC34A; /* Brighter Green */
-            --secondary-color-dark: #424242; /* Dark Gray */
+            --header-color-light: #2C4A32;
+            --primary-color-dark: #8BC34A;
+            --secondary-color-dark: #424242;
             --background-color-dark: #1f1f1f;
             --text-color-dark: #e0e0e0;
-            --header-color-dark: #F2E8CF; /* Cream for dark mode headers */
-
+            --header-color-dark: #F2E8CF;
             --primary-color: var(--primary-color-light);
             --secondary-color: var(--secondary-color-light);
             --background-color: var(--background-color-light);
             --text-color: var(--text-color-light);
             --header-color: var(--header-color-light);
-
             --transition-speed: 0.5s;
             --border-radius-large: 24px;
             --border-radius-medium: 15px;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             margin: 0;
-            padding-bottom: 100px; /* Space for mobile dock */
+            padding-bottom: 100px;
             background-color: var(--background-color);
             color: var(--text-color);
             transition: background-color var(--transition-speed), color var(--transition-speed);
@@ -52,8 +47,8 @@
             --text-color: var(--text-color-dark);
             --header-color: var(--header-color-dark);
         }
-
-        /* --- General Content Styles (Unchanged) --- */
+        
+        /* --- General Content Styles --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideInUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -76,24 +71,28 @@
         .map-container { border-radius: var(--border-radius-medium); overflow: hidden; height: 400px; } .map-container iframe { width: 100%; height: 100%; border: 0; }
         #credits a { color: var(--primary-color); }
         .page-footer { text-align: center; padding: 2rem; background-color: #1f1f1f; color: #e0e0e0; }
-
-
+        
         /* --- DESKTOP: Liquid Glass Dock --- */
         .effect {
-            display: none; /* Hidden by default, shown on desktop */
+            display: none;
         }
         @media (min-width: 769px) {
-            .mobile-dock { display: none; } /* Hide mobile dock on desktop */
+            .mobile-dock { display: none; }
 
             .effect {
-                display: block;
+                display: block; /* Show the dock on desktop */
                 opacity: 0;
-                transition: opacity 0.26s ease-out;
+                position: fixed;
+                z-index: 9999;
+                /* Pure CSS positioning */
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                /* Dynamic size from JS */
                 height: calc(var(--height) * 1px);
                 width: calc(var(--width) * 1px);
                 border-radius: calc(var(--radius) * 1px);
-                position: fixed;
-                z-index: 9999;
+                /* Visual Effects */
                 background: light-dark(hsl(0 0% 100% / var(--frost, 0)), hsl(0 0% 0% / var(--frost, 0)));
                 backdrop-filter: url(#filter) saturate(var(--saturation, 1));
                 box-shadow: 0 0 2px 1px light-dark(rgba(0,0,0,0.15), rgba(255,255,255,0.15)) inset, 0 4px 16px rgba(0,0,0,0.1);
@@ -105,110 +104,45 @@
             .effect nav a { text-decoration: none; color: var(--text-color); font-weight: 500; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 8px; transition: background-color 0.2s, color 0.2s; }
             .effect nav a:hover, .effect nav a.active { background-color: rgba(128, 128, 128, 0.2); color: var(--primary-color); }
             .filter { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-            .placeholder-section { display: flex; justify-content: center; align-items: center; padding-bottom: 4rem; min-height: 120px; }
-            .dock-placeholder { width: 550px; height: 65px; border-radius: 16px; }
         }
 
         /* --- MOBILE: Touch-Friendly Dock --- */
         .mobile-dock {
-            display: none; /* Hidden by default, shown on mobile */
+            display: none;
         }
         @media (max-width: 768px) {
-            .effect, .filter, .placeholder-section { display: none; } /* Hide desktop dock and its helpers */
-
+            .effect, .filter { display: none; }
+            
             .mobile-dock {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 position: fixed;
-                bottom: 1rem;
-                left: 1rem;
-                right: 1rem;
+                bottom: 1rem; left: 1rem; right: 1rem;
                 z-index: 1000;
                 padding: 0.5rem 0.5rem 0.5rem 1.5rem;
                 border-radius: var(--border-radius-large);
                 background-color: rgba(240, 240, 240, 0.6);
-                backdrop-filter: blur(15px);
-                -webkit-backdrop-filter: blur(15px);
+                backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
                 box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             }
-            .dark-mode .mobile-dock {
-                background-color: rgba(30, 30, 30, 0.6);
-            }
-            .mobile-dock .logo {
-                font-size: 1.2rem;
-                font-weight: bold;
-                color: var(--header-color);
-                text-decoration: none;
-            }
-            #mobile-menu-toggle {
-                background: transparent;
-                border: none;
-                cursor: pointer;
-                padding: 10px;
-                z-index: 1001;
-            }
-            .hamburger-bar {
-                width: 25px;
-                height: 3px;
-                background-color: var(--header-color);
-                transition: transform 0.3s, opacity 0.3s;
-                display: block;
-            }
+            .dark-mode .mobile-dock { background-color: rgba(30, 30, 30, 0.6); }
+            .mobile-dock .logo { font-size: 1.2rem; font-weight: bold; color: var(--header-color); text-decoration: none; }
+            #mobile-menu-toggle { background: transparent; border: none; cursor: pointer; padding: 10px; z-index: 1001; }
+            .hamburger-bar { width: 25px; height: 3px; background-color: var(--header-color); transition: transform 0.3s, opacity 0.3s; display: block; }
             .hamburger-bar + .hamburger-bar { margin-top: 5px; }
-
-            /* Mobile Nav Panel */
-            .mobile-dock nav {
-                position: absolute;
-                bottom: calc(100% + 10px);
-                right: 0;
-                width: 250px;
-                padding: 1rem;
-                background-color: rgba(250, 250, 250, 0.8);
-                backdrop-filter: blur(15px);
-                -webkit-backdrop-filter: blur(15px);
-                border-radius: var(--border-radius-medium);
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(10px);
-                transition: all 0.3s ease-out;
-            }
-            .dark-mode .mobile-dock nav {
-                background-color: rgba(40, 40, 40, 0.8);
-            }
-            .mobile-dock nav a {
-                text-decoration: none;
-                color: var(--text-color);
-                font-weight: 500;
-                padding: 0.75rem 1rem;
-                border-radius: 8px;
-            }
-            .mobile-dock nav a.active {
-                 background-color: var(--primary-color);
-                 color: white;
-            }
-            .dark-mode .mobile-dock nav a.active {
-                color: var(--background-color-dark);
-            }
-
-            /* Open State */
-            body.nav-open .mobile-dock nav {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-            }
+            .mobile-dock nav { position: absolute; bottom: calc(100% + 10px); right: 0; width: 250px; padding: 1rem; background-color: rgba(250, 250, 250, 0.8); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: var(--border-radius-medium); box-shadow: 0 -5px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 0.5rem; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease-out; }
+            .dark-mode .mobile-dock nav { background-color: rgba(40, 40, 40, 0.8); }
+            .mobile-dock nav a { text-decoration: none; color: var(--text-color); font-weight: 500; padding: 0.75rem 1rem; border-radius: 8px; }
+            .mobile-dock nav a.active { background-color: var(--primary-color); color: white; }
+            .dark-mode .mobile-dock nav a.active { color: var(--background-color-dark); }
+            body.nav-open .mobile-dock nav { opacity: 1; visibility: visible; transform: translateY(0); }
             body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(2) { opacity: 0; }
             body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-            /* Adjust content for mobile */
-            .hero-content h1 { font-size: 2.5rem; }
-            #location .location-content { grid-template-columns: 1fr; }
-            .fact-item, .fact-item:nth-child(even) { flex-direction: column; text-align: center; }
+            .hero-content h1 { font-size: 2.5rem; } 
+            #location .location-content { grid-template-columns: 1fr; } 
+            .fact-item, .fact-item:nth-child(even) { flex-direction: column; text-align: center; } 
         }
     </style>
 </head>
@@ -221,15 +155,14 @@
         <section id="documentation" aria-labelledby="documentation-heading"><div class="container"><h2 id="documentation-heading" class="slide-up">Tư Liệu Chi Tiết</h2><h3>Sự Thành Lập và Phong Trào Duy Tân</h3><p>Trường Dục Thanh được thành lập vào năm 1907...</p><h3>Thầy giáo Nguyễn Tất Thành (Hồ Chí Minh)</h3><p>Vào tháng 9 năm 1910...</p><h3>Kiến Trúc và Khuôn Viên</h3><p>Kiến trúc của trường là một ví dụ khiêm tốn...</p></div></section>
         <section id="location" aria-labelledby="location-heading"><div class="container"><h2 id="location-heading" class="slide-up">Lên Kế Hoạch Tham Quan</h2><div class="location-content"><div class="location-details slide-left"><p>Hãy đến và trải nghiệm một phần quan trọng của lịch sử Việt Nam...</p><p><strong>Địa chỉ:</strong> <span>39 Trưng Nhị, Phan Thiết...</span></p><p><strong>Giờ mở cửa:</strong> <span>Mở cửa hàng ngày...</span></p></div><div class="map-container slide-up"><iframe src="https://www.google.com/maps/embed?pb=!1m18!m12!1m3!1d3902.593739701786!2d108.1009130748287!3d10.956698189339395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31768406795f109b%3A0x4426541f692994f3!2zVHLGsOG7nW5nIEThu6VjIFRoYW5o!5e0!3m2!1sen!2s!4v1698698765432!5m2!1sen!2s" loading="lazy"></iframe></div></div></div></section>
         <section id="credits" aria-labelledby="credits-heading"><div class="container"><h2 id="credits-heading" class="slide-up">Nguồn và Ghi công</h2><div class="credits-content"><h3>Thông tin</h3><p>... <a href="https://en.wikipedia.org/wiki/Duc_Thanh_School" target="_blank">Truy cập trang Wikipedia</a></p><h3>Hình ảnh</h3><p>... <a href="https://phuhaibeachresortphanthiet.com/" target="_blank">Truy cập trang web nguồn</a></p></div></div></section>
-        <section class="placeholder-section"><div class="dock-placeholder"></div></section>
     </main>
     <footer class="page-footer"><p>Khu Di Tích Trường Dục Thanh © 2025</p></footer>
 
-    <!-- DESKTOP: Liquid Glass Dock Elements -->
+    <!-- DESKTOP DOCK -->
     <div class="effect"><div class="nav-wrap"><nav class="desktop-nav"><a href="#intro" class="nav-link">Trang Chủ</a><a href="#info" class="nav-link">Thông Tin</a><a href="#facts" class="nav-link">Sự Thật</a><a href="#documentation" class="nav-link">Tư Liệu</a><a href="#location" class="nav-link">Vị Trí</a><a href="#credits" class="nav-link">Nguồn</a></nav></div></div>
     <svg class="filter" xmlns="http://www.w3.org/2000/svg"><defs><filter id="filter" color-interpolation-filters="sRGB"><feImage x="0" y="0" width="100%" height="100%" result="map"></feImage><feDisplacementMap in="SourceGraphic" in2="map" id="redchannel" xChannelSelector="R" yChannelSelector="G" result="dispRed" /><feColorMatrix in="dispRed" type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" result="red" /><feDisplacementMap in="SourceGraphic" in2="map" id="greenchannel" xChannelSelector="R" yChannelSelector="G" result="dispGreen" /><feColorMatrix in="dispGreen" type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0" result="green" /><feDisplacementMap in="SourceGraphic" in2="map" id="bluechannel" xChannelSelector="R" yChannelSelector="G" result="dispBlue" /><feColorMatrix in="dispBlue" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0" result="blue" /><feBlend in="red" in2="green" mode="screen" result="rg" /><feBlend in="rg" in2="blue" mode="screen" result="output" /><feGaussianBlur in="output" stdDeviation="0.7" /></filter></defs></svg>
 
-    <!-- MOBILE: Touch-Friendly Dock -->
+    <!-- MOBILE DOCK -->
     <div class="mobile-dock">
         <a href="#intro" class="logo">TRƯỜNG DỤC THANH</a>
         <nav class="mobile-nav">
@@ -261,7 +194,6 @@
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
-                    // Reset transform to ensure animations run correctly
                     if (entry.target.classList.contains('slide-up')) entry.target.style.transform = 'translateY(0)';
                     if (entry.target.classList.contains('slide-left')) entry.target.style.transform = 'translateX(0)';
                     animatedObserver.unobserve(entry.target);
@@ -269,20 +201,17 @@
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.slide-up, .slide-left').forEach((el) => animatedObserver.observe(el));
-
+        
         // --- Universal Scroll Spy Logic ---
         const sections = document.querySelectorAll('main section');
         const allNavLinks = document.querySelectorAll('.nav-link');
-
         const activateNavLink = () => {
             let currentSectionId = '';
             sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (window.scrollY >= sectionTop - 150) {
+                if (window.scrollY >= section.offsetTop - 150) {
                     currentSectionId = section.getAttribute('id');
                 }
             });
-
             allNavLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === `#${currentSectionId}`) {
@@ -290,8 +219,7 @@
                 }
             });
         };
-
-        function throttle(func, limit) {
+        const throttle = (func, limit) => {
             let inThrottle;
             return function() {
                 if (!inThrottle) {
@@ -302,33 +230,25 @@
             }
         }
         window.addEventListener('scroll', throttle(activateNavLink, 100));
-        activateNavLink(); // Run on load
+        activateNavLink();
 
         // --- Mobile Dock Logic ---
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
-        mobileMenuToggle.addEventListener('click', () => {
-            body.classList.toggle('nav-open');
-        });
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                body.classList.remove('nav-open');
-            });
-        });
+        mobileMenuToggle.addEventListener('click', () => body.classList.toggle('nav-open'));
+        mobileNavLinks.forEach(link => link.addEventListener('click', () => body.classList.remove('nav-open')));
 
-        // --- Desktop Liquid Glass Dock Logic (ALWAYS INITIALIZE) ---
+        // --- Desktop Liquid Glass Dock Logic ---
         const config = {
             scale: -180, radius: 16, border: 0.07, lightness: 50, displace: 0, blend: 'difference',
             x: 'R', y: 'B', alpha: 0.93, blur: 11, r: 0, g: 10, b: 20, saturation: 1, width: 550, height: 65, frost: 0.05,
         };
-
         const buildDisplacementImage = () => {
             const border = Math.min(config.width, config.height) * (config.border * 0.5);
             const svgContent = `<svg viewBox="0 0 ${config.width} ${config.height}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="red" x1="100%" y1="0%" x2="0%" y2="0%"><stop offset="0%" stop-color="#000"/><stop offset="100%" stop-color="red"/></linearGradient><linearGradient id="blue" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#000"/><stop offset="100%" stop-color="blue"/></linearGradient></defs><rect x="0" y="0" width="${config.width}" height="${config.height}" fill="black"></rect><rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${config.radius}" fill="url(#red)" /><rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${config.radius}" fill="url(#blue)" style="mix-blend-mode: ${config.blend}" /><rect x="${border}" y="${border}" width="${config.width - border * 2}" height="${config.height - border * 2}" rx="${config.radius}" fill="hsl(0 0% ${config.lightness}% / ${config.alpha})" style="filter:blur(${config.blur}px)" /></svg>`;
             const dataUri = `data:image/svg+xml;base64,${window.btoa(svgContent)}`;
             gsap.set('feImage', { attr: { href: dataUri } });
         };
-
         const update = () => {
             buildDisplacementImage();
             gsap.set(document.documentElement, { '--width': config.width, '--height': config.height, '--radius': config.radius, '--frost': config.frost, '--saturation': config.saturation });
@@ -338,14 +258,10 @@
             gsap.set('feGaussianBlur', { attr: { stdDeviation: config.displace } });
         };
 
-        // Initialize Draggable and position the dock
+        // Initialize Draggable, update visuals, and make it visible
         Draggable.create('.effect', { type: 'x,y' });
         update();
-        const placeholder = document.querySelector('.dock-placeholder');
-        if (placeholder) {
-            const { top, left } = placeholder.getBoundingClientRect();
-             gsap.set('.effect', { top: top, left, opacity: 1 });
-        }
+        gsap.set('.effect', { opacity: 1 }); // Simply make the dock visible
     </script>
 </body>
 </html>
