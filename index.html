@@ -25,7 +25,7 @@
             --transition-speed: 0.5s;
             --border-radius-large: 24px;
             --border-radius-medium: 15px;
-
+            
             /* Liquid Glass Variables */
             --shadow-offset: 0;
             --shadow-blur: 20px;
@@ -59,7 +59,7 @@
             --text-color: var(--text-color-dark);
             --header-color: var(--header-color-dark);
         }
-
+        
         /* --- General Content Styles --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -75,9 +75,9 @@
         p, li { line-height: 1.7; font-size: 1.1rem; }
         #intro { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 2rem; position: relative; }
         #intro::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://phuhaibeachresortphanthiet.com/wp-content/uploads/2023/02/Banner-32-scaled.jpg') no-repeat center center/cover; z-index: -1; animation: fadeInZoom 2.5s ease-out forwards; }
-        .hero-content h1 { font-size: 4rem; margin-bottom: 1rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+        .hero-content h1 { font-size: 4rem; margin-bottom: 1rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); } 
         .hero-content p { font-size: 1.5rem; margin-bottom: 2rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.5); }
-
+        
         /* CTA Button */
         .cta-button {
             display: inline-block;
@@ -99,7 +99,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             animation: none;
         }
-
+        
         /* Testimonials */
         .testimonials {
             display: grid;
@@ -150,7 +150,7 @@
             color: white;
             font-weight: bold;
         }
-
+        
         /* Gallery */
         .gallery {
             display: grid;
@@ -188,7 +188,7 @@
         .gallery-item:hover .gallery-overlay {
             transform: translateY(0);
         }
-
+        
         /* Countdown Timer */
         .countdown {
             display: flex;
@@ -213,7 +213,7 @@
             font-size: 0.9rem;
             text-transform: uppercase;
         }
-
+        
         /* Admin Panel */
         .admin-panel {
             position: fixed;
@@ -360,7 +360,7 @@
             margin: 10px 0;
             font-size: 0.9rem;
         }
-
+        
         #info .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
         .info-card { padding: 30px; border-radius: var(--border-radius-large); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.1); }
         #facts, #credits { background-color: var(--secondary-color); } .fact-item { display: flex; align-items: center; gap: 30px; margin-bottom: 40px; }
@@ -369,7 +369,7 @@
         .map-container { border-radius: var(--border-radius-medium); overflow: hidden; height: 400px; } .map-container iframe { width: 100%; height: 100%; border: 0; }
         #credits a { color: var(--primary-color); }
         .page-footer { text-align: center; padding: 2rem; background-color: #1f1f1f; color: #e0e0e0; }
-
+        
         /* Image Credits */
         .image-credits {
             margin-top: 40px;
@@ -382,48 +382,86 @@
             margin-bottom: 10px;
             color: var(--primary-color);
         }
-
-        /* --- DESKTOP: Liquid Glass Dock --- */
-        .effect {
-            display: none;
+        
+        /* --- OPTIMIZED Liquid Glass Dock --- */
+        .liquid-dock {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            height: 65px;
+            width: 550px;
+            border-radius: 16px;
+            cursor: move;
+            isolation: isolate;
+            touch-action: none;
+            box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            gap: 0.5rem;
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
-        @media (min-width: 769px) {
-            .mobile-dock { display: none; }
-
-            .effect {
-                display: block; /* Show the dock on desktop */
-                opacity: 0;
-                position: fixed;
-                z-index: 9999;
-                /* Pure CSS positioning */
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                /* Dynamic size from JS */
-                height: calc(var(--height) * 1px);
-                width: calc(var(--width) * 1px);
-                border-radius: calc(var(--radius) * 1px);
-                /* Visual Effects */
-                background: light-dark(hsl(0 0% 100% / var(--frost, 0)), hsl(0 0% 0% / var(--frost, 0)));
-                backdrop-filter: url(#filter) saturate(var(--saturation, 1));
-                box-shadow: 0 0 2px 1px light-dark(rgba(0,0,0,0.15), rgba(255,255,255,0.15)) inset, 0 4px 16px rgba(0,0,0,0.1);
-            }
-            .effect * { pointer-events: none; }
-            .effect nav a { pointer-events: all; }
-            .effect .nav-wrap { width: 100%; height: 100%; overflow: hidden; border-radius: inherit; }
-            .effect nav { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.5rem; }
-            .effect nav a { text-decoration: none; color: var(--text-color); font-weight: 500; font-size: 0.9rem; padding: 0.5rem 1rem; border-radius: 8px; transition: background-color 0.2s, color 0.2s; }
-            .effect nav a:hover, .effect nav a.active { background-color: rgba(128, 128, 128, 0.2); color: var(--primary-color); }
-            .filter { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        
+        .liquid-dock::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: 16px;
+            box-shadow: inset var(--shadow-offset) var(--shadow-offset) var(--shadow-blur) var(--shadow-spread) var(--shadow-color);
+            background-color: rgba(var(--tint-color), var(--tint-opacity));
         }
-
+        
+        .liquid-dock::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 16px;
+            backdrop-filter: blur(var(--frost-blur));
+            filter: url(#glass-distortion);
+            isolation: isolate;
+            -webkit-backdrop-filter: blur(var(--frost-blur));
+        }
+        
+        .liquid-dock nav {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+        
+        .liquid-dock nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.2s, color 0.2s;
+            z-index: 1;
+            position: relative;
+        }
+        
+        .liquid-dock nav a:hover, .liquid-dock nav a.active {
+            background-color: rgba(128, 128, 128, 0.2);
+            color: var(--primary-color);
+        }
+        
         /* --- MOBILE: Touch-Friendly Dock --- */
         .mobile-dock {
             display: none;
         }
         @media (max-width: 768px) {
-            .effect, .filter { display: none; }
-
+            .liquid-dock { display: none; }
+            
             .mobile-dock {
                 display: flex;
                 justify-content: space-between;
@@ -451,9 +489,9 @@
             body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(2) { opacity: 0; }
             body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-            .hero-content h1 { font-size: 2.5rem; }
-            #location .location-content { grid-template-columns: 1fr; }
-            .fact-item, .fact-item:nth-child(even) { flex-direction: column; text-align: center; }
+            .hero-content h1 { font-size: 2.5rem; } 
+            #location .location-content { grid-template-columns: 1fr; } 
+            .fact-item, .fact-item:nth-child(even) { flex-direction: column; text-align: center; } 
             .countdown { flex-wrap: wrap; }
         }
     </style>
@@ -469,7 +507,7 @@
                 <input type="text" id="username" placeholder="Tên đăng nhập">
                 <input type="password" id="password" placeholder="Mật khẩu">
                 <button id="login-btn">Đăng nhập</button>
-                <p class="login-message">(I dont't know the password bro, ask Quang Minh)</p>
+                <p class="login-message">(admin/admin)</p>
             </div>
             <div class="admin-content" id="admin-content" style="display: none;">
                 <div class="admin-section">
@@ -497,24 +535,24 @@
                     </label>
                     <p class="warning">⚠️ Cảnh báo: Liquid Glass trên mobile có thể gây lag!</p>
                 </div>
-
+                
                 <div class="admin-section">
                     <h4>Cài đặt Liquid Glass</h4>
                     <label>Inner Shadow Color: <input type="color" id="shadow-color" value="#ffffff"></label>
                     <label>Inner Shadow Blur: <input type="range" id="shadow-blur" min="0" max="20" value="20">px</label>
                     <label>Inner Shadow Spread: <input type="range" id="shadow-spread" min="-10" max="10" value="-5">px</label>
-
+                    
                     <label>Glass Tint Color: <input type="color" id="tint-color" value="#ffffff"></label>
                     <label>Tint Opacity: <input type="range" id="tint-opacity" min="0" max="100" value="4">%</label>
-
+                    
                     <label>Frost Blur: <input type="range" id="frost-blur" min="0" max="30" value="2">px</label>
-
+                    
                     <label>Noise Frequency: <input type="range" id="noise-frequency" min="0" max="0.02" step="0.001" value="0.008"></label>
                     <label>Distortion Strength: <input type="range" id="distortion-strength" min="0" max="200" value="77"></label>
-
+                    
                     <label>Background Image URL: <input type="text" id="bg-url" placeholder="https://..."></label>
                 </div>
-
+                
                 <div class="admin-section">
                     <button id="reset-settings">Đặt lại cài đặt</button>
                     <button id="logout-btn">Đăng xuất</button>
@@ -551,7 +589,7 @@
                 <p class="slide-up">Chương trình ưu đãi đặc biệt chỉ còn:</p>
             </div>
         </section>
-
+        
         <section id="info" aria-labelledby="info-heading">
             <div class="container">
                 <h2 id="info-heading" class="slide-up">Di Sản Trường Tồn</h2>
@@ -569,7 +607,7 @@
                         <p>Khu di tích vẫn còn lưu giữ gần như nguyên vẹn các công trình kiến trúc ban đầu...</p>
                     </div>
                 </div>
-
+                
                 <h3 class="slide-up">Trải Nghiệm Độc Đáo Chỉ Có Tại Trường Dục Thanh</h3>
                 <div class="gallery slide-up">
                     <div class="gallery-item">
@@ -597,14 +635,14 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="image-credits">
                     <h4>Ghi công hình ảnh:</h4>
                     <p>Kiến trúc Trường Dục Thanh: travel.com.vn | Cây khế: VietnamPlus | Lớp học: Vielimousine | Du khách: Báo Lao Động</p>
                 </div>
             </div>
         </section>
-
+        
         <section id="testimonials" aria-labelledby="testimonials-heading">
             <div class="container">
                 <h2 id="testimonials-heading" class="slide-up">Cảm Nhận Của Du Khách</h2>
@@ -648,7 +686,7 @@
                 </div>
             </div>
         </section>
-
+        
         <section id="facts" aria-labelledby="facts-heading">
             <div class="container">
                 <h2 id="facts-heading" class="slide-up">Khám Phá Những Câu Chuyện</h2>
@@ -675,7 +713,7 @@
                 </div>
             </div>
         </section>
-
+        
         <section id="documentation" aria-labelledby="documentation-heading">
             <div class="container">
                 <h2 id="documentation-heading" class="slide-up">Tư Liệu Chi Tiết</h2>
@@ -687,7 +725,7 @@
                 <p>Kiến trúc của trường là một ví dụ khiêm tốn...</p>
             </div>
         </section>
-
+        
         <section id="location" aria-labelledby="location-heading">
             <div class="container">
                 <h2 id="location-heading" class="slide-up">Lên Kế Hoạch Tham Quan</h2>
@@ -706,7 +744,7 @@
                 </div>
             </div>
         </section>
-
+        
         <section id="credits" aria-labelledby="credits-heading">
             <div class="container">
                 <h2 id="credits-heading" class="slide-up">Nguồn và Ghi công</h2>
@@ -722,27 +760,35 @@
             </div>
         </section>
     </main>
-
+    
     <footer class="page-footer">
         <p>Khu Di Tích Trường Dục Thanh © 2025</p>
         <p>Liên hệ: 0123 456 789 | Email: info@truongducthanh.vn</p>
         <p>Powered by GitHub Pages | Liquid Glass Dock by <a href="https://github.com/archisvaze/liquid-glass" target="_blank">Archis Vaze</a></p>
     </footer>
 
-    <!-- DESKTOP DOCK -->
-    <div class="effect">
-        <div class="nav-wrap">
-            <nav class="desktop-nav">
-                <a href="#intro" class="nav-link">Trang Chủ</a>
-                <a href="#info" class="nav-link">Thông Tin</a>
-                <a href="#testimonials" class="nav-link">Đánh Giá</a>
-                <a href="#facts" class="nav-link">Sự Thật</a>
-                <a href="#documentation" class="nav-link">Tư Liệu</a>
-                <a href="#location" class="nav-link">Đặt Tour</a>
-            </nav>
-        </div>
+    <!-- OPTIMIZED Liquid Glass Dock -->
+    <div class="liquid-dock">
+        <nav class="desktop-nav">
+            <a href="#intro" class="nav-link">Trang Chủ</a>
+            <a href="#info" class="nav-link">Thông Tin</a>
+            <a href="#testimonials" class="nav-link">Đánh Giá</a>
+            <a href="#facts" class="nav-link">Sự Thật</a>
+            <a href="#documentation" class="nav-link">Tư Liệu</a>
+            <a href="#location" class="nav-link">Đặt Tour</a>
+        </nav>
     </div>
-    <svg class="filter" xmlns="http://www.w3.org/2000/svg"><defs><filter id="filter" color-interpolation-filters="sRGB"><feImage x="0" y="0" width="100%" height="100%" result="map"></feImage><feDisplacementMap in="SourceGraphic" in2="map" id="redchannel" xChannelSelector="R" yChannelSelector="G" result="dispRed" /><feColorMatrix in="dispRed" type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" result="red" /><feDisplacementMap in="SourceGraphic" in2="map" id="greenchannel" xChannelSelector="R" yChannelSelector="G" result="dispGreen" /><feColorMatrix in="dispGreen" type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0" result="green" /><feDisplacementMap in="SourceGraphic" in2="map" id="bluechannel" xChannelSelector="R" yChannelSelector="G" result="dispBlue" /><feColorMatrix in="dispBlue" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0" result="blue" /><feBlend in="red" in2="green" mode="screen" result="rg" /><feBlend in="rg" in2="blue" mode="screen" result="output" /><feGaussianBlur in="output" stdDeviation="0.7" /></filter></defs></svg>
+    
+    <!-- Liquid Glass Filter -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute; overflow:hidden">
+        <defs>
+            <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise" />
+                <feGaussianBlur in="noise" stdDeviation="2" result="blurred" />
+                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="77" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
 
     <!-- MOBILE DOCK -->
     <div class="mobile-dock">
@@ -760,11 +806,7 @@
         </button>
     </div>
 
-    <script type="module">
-        import gsap from 'https://cdn.skypack.dev/gsap@3.12.5';
-        import Draggable from 'https://cdn.skypack.dev/gsap@3.12.5/Draggable';
-        gsap.registerPlugin(Draggable);
-
+    <script>
         // --- Shared Site Logic ---
         const body = document.body;
         const themeMatcher = window.matchMedia('(prefers-color-scheme: dark)');
@@ -783,7 +825,7 @@
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.slide-up, .slide-left').forEach((el) => animatedObserver.observe(el));
-
+        
         // --- Universal Scroll Spy Logic ---
         const sections = document.querySelectorAll('main section');
         const allNavLinks = document.querySelectorAll('.nav-link');
@@ -825,48 +867,23 @@
             const now = new Date();
             const targetDate = new Date();
             targetDate.setDate(now.getDate() + 7); // Set to 7 days from now
-
+            
             const timeRemaining = targetDate - now;
-
+            
             const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
+            
             document.getElementById('days').textContent = days.toString().padStart(2, '0');
             document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
             document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
-
+        
         // Update countdown every second
         setInterval(updateCountdown, 1000);
         updateCountdown(); // Initial call
-
-        // --- Desktop Liquid Glass Dock Logic ---
-        const config = {
-            scale: -180, radius: 16, border: 0.07, lightness: 50, displace: 0, blend: 'difference',
-            x: 'R', y: 'B', alpha: 0.93, blur: 11, r: 0, g: 10, b: 20, saturation: 1, width: 550, height: 65, frost: 0.05,
-        };
-        const buildDisplacementImage = () => {
-            const border = Math.min(config.width, config.height) * (config.border * 0.5);
-            const svgContent = `<svg viewBox="0 0 ${config.width} ${config.height}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="red" x1="100%" y1="0%" x2="0%" y2="0%"><stop offset="0%" stop-color="#000"/><stop offset="100%" stop-color="red"/></linearGradient><linearGradient id="blue" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#000"/><stop offset="100%" stop-color="blue"/></linearGradient></defs><rect x="0" y="0" width="${config.width}" height="${config.height}" fill="black"></rect><rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${config.radius}" fill="url(#red)" /><rect x="0" y="0" width="${config.width}" height="${config.height}" rx="${config.radius}" fill="url(#blue)" style="mix-blend-mode: ${config.blend}" /><rect x="${border}" y="${border}" width="${config.width - border * 2}" height="${config.height - border * 2}" rx="${config.radius}" fill="hsl(0 0% ${config.lightness}% / ${config.alpha})" style="filter:blur(${config.blur}px)" /></svg>`;
-            const dataUri = `data:image/svg+xml;base64,${window.btoa(svgContent)}`;
-            gsap.set('feImage', { attr: { href: dataUri } });
-        };
-        const update = () => {
-            buildDisplacementImage();
-            gsap.set(document.documentElement, { '--width': config.width, '--height': config.height, '--radius': config.radius, '--frost': config.frost, '--saturation': config.saturation });
-            gsap.set('#redchannel', { attr: { scale: config.scale + config.r } });
-            gsap.set('#greenchannel', { attr: { scale: config.scale + config.g } });
-            gsap.set('#bluechannel', { attr: { scale: config.scale + config.b } });
-            gsap.set('feGaussianBlur', { attr: { stdDeviation: config.displace } });
-        };
-
-        // Initialize Draggable, update visuals, and make it visible
-        Draggable.create('.effect', { type: 'x,y' });
-        update();
-        gsap.set('.effect', { opacity: 1 }); // Simply make the dock visible
 
         // --- Admin Panel Logic ---
         const adminToggle = document.getElementById('admin-toggle');
@@ -891,7 +908,7 @@
         loginBtn.addEventListener('click', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-
+            
             if (username === 'admin' && password === 'admin') {
                 isLoggedIn = true;
                 loginForm.style.display = 'none';
@@ -917,11 +934,11 @@
 
         // Liquid glass toggle
         liquidGlassToggle.addEventListener('change', () => {
-            const effect = document.querySelector('.effect');
+            const dock = document.querySelector('.liquid-dock');
             if (liquidGlassToggle.checked) {
-                effect.style.display = 'block';
+                dock.style.display = 'flex';
             } else {
-                effect.style.display = 'none';
+                dock.style.display = 'none';
             }
         });
 
@@ -944,15 +961,15 @@
             document.getElementById('noise-frequency').value = '0.008';
             document.getElementById('distortion-strength').value = '77';
             document.getElementById('bg-url').value = '';
-
+            
             darkModeToggle.checked = false;
             liquidGlassToggle.checked = true;
             liquidGlassMobileToggle.checked = false;
-
+            
             // Apply the reset
             updateAll();
             body.classList.remove('dark-mode');
-
+            
             alert('Cài đặt đã được đặt lại về mặc định!');
         });
 
@@ -979,7 +996,13 @@
                 const el = document.getElementById(id);
                 if (el) document.documentElement.style.setProperty(cssVar, fn(el.value));
             });
-
+            
+            // Update SVG filter
+            const freq = parseFloat(document.getElementById('noise-frequency').value);
+            const scale = document.getElementById('distortion-strength').value;
+            document.querySelector('feTurbulence').setAttribute('baseFrequency', `${freq} ${freq}`);
+            document.querySelector('feDisplacementMap').setAttribute('scale', scale);
+            
             // Update background if URL is provided
             const bgUrl = document.getElementById('bg-url').value;
             if (bgUrl) {
@@ -991,6 +1014,48 @@
         document.querySelectorAll('#admin-content input').forEach(input => {
             input.addEventListener('input', updateAll);
         });
+
+        // Initialize liquid glass settings
+        updateAll();
+
+        // --- OPTIMIZED Liquid Glass Dock Dragging ---
+        const dock = document.querySelector('.liquid-dock');
+        
+        function dragElement(elmnt) {
+            let startX = 0, startY = 0;
+
+            const onPointerDown = e => {
+                e.preventDefault();
+                const rect = elmnt.getBoundingClientRect();
+                elmnt.style.position = 'fixed';
+                elmnt.style.top = rect.top + 'px';
+                elmnt.style.left = rect.left + 'px';
+                elmnt.style.transform = 'none';
+
+                startX = e.clientX;
+                startY = e.clientY;
+                document.addEventListener('pointermove', onPointerMove);
+                document.addEventListener('pointerup', onPointerUp, { once: true });
+            };
+
+            const onPointerMove = e => {
+                e.preventDefault();
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                startX = e.clientX;
+                startY = e.clientY;
+                elmnt.style.left = (elmnt.offsetLeft + dx) + 'px';
+                elmnt.style.top = (elmnt.offsetTop + dy) + 'px';
+            };
+
+            const onPointerUp = () => {
+                document.removeEventListener('pointermove', onPointerMove);
+            };
+
+            elmnt.addEventListener('pointerdown', onPointerDown);
+        }
+
+        dragElement(dock);
     </script>
 </body>
 </html>
