@@ -25,6 +25,18 @@
             --transition-speed: 0.5s;
             --border-radius-large: 24px;
             --border-radius-medium: 15px;
+
+            /* Liquid Glass Variables */
+            --shadow-offset: 0;
+            --shadow-blur: 20px;
+            --shadow-spread: -5px;
+            --shadow-color: rgba(255, 255, 255, 0.7);
+            --tint-color: 255, 255, 255;
+            --tint-opacity: 0.4;
+            --frost-blur: 2px;
+            --noise-frequency: 0.008;
+            --distortion-strength: 77;
+            --outer-shadow-blur: 24px;
         }
 
         html { scroll-behavior: smooth; }
@@ -47,7 +59,7 @@
             --text-color: var(--text-color-dark);
             --header-color: var(--header-color-dark);
         }
-        
+
         /* --- General Content Styles --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -63,9 +75,9 @@
         p, li { line-height: 1.7; font-size: 1.1rem; }
         #intro { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 2rem; position: relative; }
         #intro::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://phuhaibeachresortphanthiet.com/wp-content/uploads/2023/02/Banner-32-scaled.jpg') no-repeat center center/cover; z-index: -1; animation: fadeInZoom 2.5s ease-out forwards; }
-        .hero-content h1 { font-size: 4rem; margin-bottom: 1rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); } 
+        .hero-content h1 { font-size: 4rem; margin-bottom: 1rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
         .hero-content p { font-size: 1.5rem; margin-bottom: 2rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.5); }
-        
+
         /* CTA Button */
         .cta-button {
             display: inline-block;
@@ -87,7 +99,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             animation: none;
         }
-        
+
         /* Testimonials */
         .testimonials {
             display: grid;
@@ -138,7 +150,7 @@
             color: white;
             font-weight: bold;
         }
-        
+
         /* Gallery */
         .gallery {
             display: grid;
@@ -176,7 +188,7 @@
         .gallery-item:hover .gallery-overlay {
             transform: translateY(0);
         }
-        
+
         /* Countdown Timer */
         .countdown {
             display: flex;
@@ -201,7 +213,154 @@
             font-size: 0.9rem;
             text-transform: uppercase;
         }
-        
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+        .admin-toggle {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .admin-toggle:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: rotate(90deg);
+        }
+        .admin-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius-medium);
+            width: 300px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: none;
+        }
+        .admin-menu.open {
+            display: block;
+        }
+        .admin-menu h3 {
+            margin-top: 0;
+            color: white;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+        .admin-menu label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .admin-menu input[type=range] {
+            width: 150px;
+        }
+        .admin-menu input[type=color] {
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 30px;
+            background: transparent;
+        }
+        .admin-menu input[type=text] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+            margin: 5px 0;
+        }
+        .admin-menu .warning {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+        .admin-section {
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+        .admin-section:last-child {
+            border-bottom: none;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        .login-form {
+            margin-bottom: 20px;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: none;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .login-message {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+
         #info .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
         .info-card { padding: 30px; border-radius: var(--border-radius-large); border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.1); }
         #facts, #credits { background-color: var(--secondary-color); } .fact-item { display: flex; align-items: center; gap: 30px; margin-bottom: 40px; }
@@ -210,7 +369,7 @@
         .map-container { border-radius: var(--border-radius-medium); overflow: hidden; height: 400px; } .map-container iframe { width: 100%; height: 100%; border: 0; }
         #credits a { color: var(--primary-color); }
         .page-footer { text-align: center; padding: 2rem; background-color: #1f1f1f; color: #e0e0e0; }
-        
+
         /* Image Credits */
         .image-credits {
             margin-top: 40px;
@@ -223,7 +382,7 @@
             margin-bottom: 10px;
             color: var(--primary-color);
         }
-        
+
         /* --- DESKTOP: Liquid Glass Dock --- */
         .effect {
             display: none;
@@ -264,7 +423,7 @@
         }
         @media (max-width: 768px) {
             .effect, .filter { display: none; }
-            
+
             .mobile-dock {
                 display: flex;
                 justify-content: space-between;
@@ -292,14 +451,78 @@
             body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(2) { opacity: 0; }
             body.nav-open #mobile-menu-toggle .hamburger-bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-            .hero-content h1 { font-size: 2.5rem; } 
-            #location .location-content { grid-template-columns: 1fr; } 
-            .fact-item, .fact-item:nth-child(even) { flex-direction: column; text-align: center; } 
+            .hero-content h1 { font-size: 2.5rem; }
+            #location .location-content { grid-template-columns: 1fr; }
+            .fact-item, .fact-item:nth-child(even) { flex-direction: column; text-align: center; }
             .countdown { flex-wrap: wrap; }
         }
     </style>
 </head>
 <body>
+    <!-- Admin Panel -->
+    <div class="admin-panel">
+        <button class="admin-toggle" id="admin-toggle">⚙️</button>
+        <div class="admin-menu" id="admin-menu">
+            <h3>Chế Độ Quản Trị</h3>
+            <div class="login-form" id="login-form">
+                <p class="login-message">Sử dụng với thận trọng!</p>
+                <input type="text" id="username" placeholder="Tên đăng nhập">
+                <input type="password" id="password" placeholder="Mật khẩu">
+                <button id="login-btn">Đăng nhập</button>
+                <p class="login-message">(I dont't know the password bro, ask Quang Minh)</p>
+            </div>
+            <div class="admin-content" id="admin-content" style="display: none;">
+                <div class="admin-section">
+                    <h4>Chế độ hiển thị</h4>
+                    <label>
+                        Dark Mode:
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="dark-mode-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </label>
+                    <label>
+                        Liquid Glass Effect:
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="liquid-glass-toggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </label>
+                    <label>
+                        Liquid Glass Mobile:
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="liquid-glass-mobile">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </label>
+                    <p class="warning">⚠️ Cảnh báo: Liquid Glass trên mobile có thể gây lag!</p>
+                </div>
+
+                <div class="admin-section">
+                    <h4>Cài đặt Liquid Glass</h4>
+                    <label>Inner Shadow Color: <input type="color" id="shadow-color" value="#ffffff"></label>
+                    <label>Inner Shadow Blur: <input type="range" id="shadow-blur" min="0" max="20" value="20">px</label>
+                    <label>Inner Shadow Spread: <input type="range" id="shadow-spread" min="-10" max="10" value="-5">px</label>
+
+                    <label>Glass Tint Color: <input type="color" id="tint-color" value="#ffffff"></label>
+                    <label>Tint Opacity: <input type="range" id="tint-opacity" min="0" max="100" value="4">%</label>
+
+                    <label>Frost Blur: <input type="range" id="frost-blur" min="0" max="30" value="2">px</label>
+
+                    <label>Noise Frequency: <input type="range" id="noise-frequency" min="0" max="0.02" step="0.001" value="0.008"></label>
+                    <label>Distortion Strength: <input type="range" id="distortion-strength" min="0" max="200" value="77"></label>
+
+                    <label>Background Image URL: <input type="text" id="bg-url" placeholder="https://..."></label>
+                </div>
+
+                <div class="admin-section">
+                    <button id="reset-settings">Đặt lại cài đặt</button>
+                    <button id="logout-btn">Đăng xuất</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main>
         <section id="intro" aria-labelledby="intro-heading">
             <div class="hero-content">
@@ -328,7 +551,7 @@
                 <p class="slide-up">Chương trình ưu đãi đặc biệt chỉ còn:</p>
             </div>
         </section>
-        
+
         <section id="info" aria-labelledby="info-heading">
             <div class="container">
                 <h2 id="info-heading" class="slide-up">Di Sản Trường Tồn</h2>
@@ -346,7 +569,7 @@
                         <p>Khu di tích vẫn còn lưu giữ gần như nguyên vẹn các công trình kiến trúc ban đầu...</p>
                     </div>
                 </div>
-                
+
                 <h3 class="slide-up">Trải Nghiệm Độc Đáo Chỉ Có Tại Trường Dục Thanh</h3>
                 <div class="gallery slide-up">
                     <div class="gallery-item">
@@ -374,14 +597,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="image-credits">
                     <h4>Ghi công hình ảnh:</h4>
                     <p>Kiến trúc Trường Dục Thanh: travel.com.vn | Cây khế: VietnamPlus | Lớp học: Vielimousine | Du khách: Báo Lao Động</p>
                 </div>
             </div>
         </section>
-        
+
         <section id="testimonials" aria-labelledby="testimonials-heading">
             <div class="container">
                 <h2 id="testimonials-heading" class="slide-up">Cảm Nhận Của Du Khách</h2>
@@ -425,7 +648,7 @@
                 </div>
             </div>
         </section>
-        
+
         <section id="facts" aria-labelledby="facts-heading">
             <div class="container">
                 <h2 id="facts-heading" class="slide-up">Khám Phá Những Câu Chuyện</h2>
@@ -452,7 +675,7 @@
                 </div>
             </div>
         </section>
-        
+
         <section id="documentation" aria-labelledby="documentation-heading">
             <div class="container">
                 <h2 id="documentation-heading" class="slide-up">Tư Liệu Chi Tiết</h2>
@@ -464,7 +687,7 @@
                 <p>Kiến trúc của trường là một ví dụ khiêm tốn...</p>
             </div>
         </section>
-        
+
         <section id="location" aria-labelledby="location-heading">
             <div class="container">
                 <h2 id="location-heading" class="slide-up">Lên Kế Hoạch Tham Quan</h2>
@@ -483,7 +706,7 @@
                 </div>
             </div>
         </section>
-        
+
         <section id="credits" aria-labelledby="credits-heading">
             <div class="container">
                 <h2 id="credits-heading" class="slide-up">Nguồn và Ghi công</h2>
@@ -499,7 +722,7 @@
             </div>
         </section>
     </main>
-    
+
     <footer class="page-footer">
         <p>Khu Di Tích Trường Dục Thanh © 2025</p>
         <p>Liên hệ: 0123 456 789 | Email: info@truongducthanh.vn</p>
@@ -560,7 +783,7 @@
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.slide-up, .slide-left').forEach((el) => animatedObserver.observe(el));
-        
+
         // --- Universal Scroll Spy Logic ---
         const sections = document.querySelectorAll('main section');
         const allNavLinks = document.querySelectorAll('.nav-link');
@@ -602,20 +825,20 @@
             const now = new Date();
             const targetDate = new Date();
             targetDate.setDate(now.getDate() + 7); // Set to 7 days from now
-            
+
             const timeRemaining = targetDate - now;
-            
+
             const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-            
+
             document.getElementById('days').textContent = days.toString().padStart(2, '0');
             document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
             document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
             document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
-        
+
         // Update countdown every second
         setInterval(updateCountdown, 1000);
         updateCountdown(); // Initial call
@@ -644,6 +867,130 @@
         Draggable.create('.effect', { type: 'x,y' });
         update();
         gsap.set('.effect', { opacity: 1 }); // Simply make the dock visible
+
+        // --- Admin Panel Logic ---
+        const adminToggle = document.getElementById('admin-toggle');
+        const adminMenu = document.getElementById('admin-menu');
+        const loginForm = document.getElementById('login-form');
+        const adminContent = document.getElementById('admin-content');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const resetBtn = document.getElementById('reset-settings');
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const liquidGlassToggle = document.getElementById('liquid-glass-toggle');
+        const liquidGlassMobileToggle = document.getElementById('liquid-glass-mobile');
+
+        let isLoggedIn = false;
+
+        // Toggle admin menu
+        adminToggle.addEventListener('click', () => {
+            adminMenu.classList.toggle('open');
+        });
+
+        // Login functionality
+        loginBtn.addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'admin' && password === 'admin') {
+                isLoggedIn = true;
+                loginForm.style.display = 'none';
+                adminContent.style.display = 'block';
+            } else {
+                alert('Tên đăng nhập hoặc mật khẩu không đúng!');
+            }
+        });
+
+        // Logout functionality
+        logoutBtn.addEventListener('click', () => {
+            isLoggedIn = false;
+            loginForm.style.display = 'block';
+            adminContent.style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        });
+
+        // Dark mode toggle
+        darkModeToggle.addEventListener('change', () => {
+            body.classList.toggle('dark-mode', darkModeToggle.checked);
+        });
+
+        // Liquid glass toggle
+        liquidGlassToggle.addEventListener('change', () => {
+            const effect = document.querySelector('.effect');
+            if (liquidGlassToggle.checked) {
+                effect.style.display = 'block';
+            } else {
+                effect.style.display = 'none';
+            }
+        });
+
+        // Liquid glass mobile toggle
+        liquidGlassMobileToggle.addEventListener('change', () => {
+            if (liquidGlassMobileToggle.checked) {
+                alert('Cảnh báo: Liquid Glass trên mobile có thể gây lag nghiêm trọng!');
+            }
+        });
+
+        // Reset settings
+        resetBtn.addEventListener('click', () => {
+            // Reset all sliders and toggles to default values
+            document.getElementById('shadow-color').value = '#ffffff';
+            document.getElementById('shadow-blur').value = '20';
+            document.getElementById('shadow-spread').value = '-5';
+            document.getElementById('tint-color').value = '#ffffff';
+            document.getElementById('tint-opacity').value = '4';
+            document.getElementById('frost-blur').value = '2';
+            document.getElementById('noise-frequency').value = '0.008';
+            document.getElementById('distortion-strength').value = '77';
+            document.getElementById('bg-url').value = '';
+
+            darkModeToggle.checked = false;
+            liquidGlassToggle.checked = true;
+            liquidGlassMobileToggle.checked = false;
+
+            // Apply the reset
+            updateAll();
+            body.classList.remove('dark-mode');
+
+            alert('Cài đặt đã được đặt lại về mặc định!');
+        });
+
+        // Liquid Glass Settings
+        const controls = {
+            'shadow-color': ['--shadow-color', v => v],
+            'shadow-blur': ['--shadow-blur', v => v + 'px'],
+            'shadow-spread': ['--shadow-spread', v => v + 'px'],
+            'tint-color': ['--tint-color', v => {
+                const hex = v.replace('#', '');
+                const r = parseInt(hex.substr(0, 2), 16);
+                const g = parseInt(hex.substr(2, 2), 16);
+                const b = parseInt(hex.substr(4, 2), 16);
+                return `${r}, ${g}, ${b}`;
+            }],
+            'tint-opacity': ['--tint-opacity', v => v / 100],
+            'frost-blur': ['--frost-blur', v => v + 'px'],
+            'noise-frequency': ['--noise-frequency', v => v],
+            'distortion-strength': ['--distortion-strength', v => v],
+        };
+
+        function updateAll() {
+            Object.entries(controls).forEach(([id, [cssVar, fn]]) => {
+                const el = document.getElementById(id);
+                if (el) document.documentElement.style.setProperty(cssVar, fn(el.value));
+            });
+
+            // Update background if URL is provided
+            const bgUrl = document.getElementById('bg-url').value;
+            if (bgUrl) {
+                document.body.style.background = `url('${bgUrl}') center/cover no-repeat`;
+            }
+        }
+
+        // Add event listeners to all liquid glass controls
+        document.querySelectorAll('#admin-content input').forEach(input => {
+            input.addEventListener('input', updateAll);
+        });
     </script>
 </body>
 </html>
